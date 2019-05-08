@@ -7,7 +7,7 @@ def dfs(graph, s):
 		if u not in visited:
 			visited.add(u)
 			print(u, end=' ')
-			for v in reversed(graph[u]):
+			for v in reversed(graph[u]): # for left-to-right traversal
 				if v not in visited: # less duplicates pushed onto stack :D
 					stack.append(v)
 	print()
