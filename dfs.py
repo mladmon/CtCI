@@ -1,5 +1,3 @@
-# note, reversed() is used to visit vertices left to right, like recursive
-# implementation would do :)
 def dfs(graph, s):
 	visited, stack = set(), [s]
 	while stack:
