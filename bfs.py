@@ -1,8 +1,7 @@
 from collections import deque
 
 def bfs(graph, s):
-	discovered = {s}				# or set([s]), which is not as nice
-	queue = deque([s])
+	discovered, queue = {s}, deque([s])
 	while queue:
 		u = queue.popleft()
 		print(u, end=' ')
