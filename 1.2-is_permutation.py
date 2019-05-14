@@ -4,10 +4,7 @@ def is_permutation(str1, str2):
 		return False
 	d1 = {}
 	for c in str1:
-		if c in d1:
-			d1[c] += 1
-		else:
-			d1[c] = 1
+		d1[c] = d1.get(c, 0) + 1
 	for c in str2:
 		if c not in d1:
 			return False
