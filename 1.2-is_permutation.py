@@ -15,11 +15,7 @@ def is_permutation(str1, str2):
 			del d1[c]
 		else:
 			d1[c] -= 1
-	if not d1:
-	#if len(d1) is 0:
-		return True
-	else:
-		return False
+	return True # bec init. check if strings same length, d1 always empty here
 
 # Let's test it!
 str1, str2 = "mario", "oiram"
