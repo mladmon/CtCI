@@ -3,22 +3,18 @@ def one_away(str1, str2):
 	if size_diff > 1:
 		return False
 	elif size_diff is 1:
-		return diff_by_one(str1, str2)
+		if len(str1) < len(str2):
+			return diff_by_one(str1, str2)
+		else:
+			return diff_by_one(str2, str1)
 	else:
 		return same_size(str1, str2)
 
-def diff_by_one(str1, str2):
-	s1, s2 = set(str1), set(str2)
-	if s1.issubset(s2):
-		return compare(str1, str2)
-	elif s2.issubset(s1):
-		return compare(str2, str1)
-	else:
-		return False
-
-def compare(subs, string):
+def diff_by_one(subs, string):
 	j = 0
 	for i in range(len(subs)):
+		if j is len(string): # more than one char was different
+			return False
 		if subs[i] is string[j]:
 			j += 1
 		elif subs[i] is string[j + 1]:
@@ -42,4 +38,4 @@ print('pale', 'ple', one_away('pale', 'ple'))
 print('pales', 'pale', one_away('pales', 'pale'))
 print('pale', 'bale', one_away('pale', 'bale'))
 print('pale', 'bake', one_away('pale', 'bake'))
-
+print('apxpl', 'pple', one_away('apxpl', 'pple')) #out of bounds
