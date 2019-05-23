@@ -3,7 +3,7 @@ def zero_matrix(mat):
 	rows, cols = [False] * m, [False] * n
 	for i, row in enumerate(mat):
 		for j, ele in enumerate(row):
-			if ele is 0:
+			if ele == 0:
 				rows[i] = True
 				cols[j] = True
 	for i in range(len(rows)):
