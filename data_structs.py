@@ -1,5 +1,9 @@
 from collections import deque
 
+class EmptyStackException(Exception):
+	def __init__(self, message):
+		self.message = message
+
 class stack:
 	def __init__(self, iterable=None):
 		if iterable is None:
@@ -11,6 +15,8 @@ class stack:
 		self.data.append(item)
 
 	def pop(self):
+		if not self.data:
+			raise EmptyStackException('pop from an empty stack')
 		return self.data.pop()
 
 	def peek(self):
@@ -30,6 +36,8 @@ class queue:
 		self.data.append(item)
 
 	def remove(self):
+		if not self.data:
+			raise IndexError('pop from an empty queue')
 		return self.data.popleft()
 
 	def peek(self):
