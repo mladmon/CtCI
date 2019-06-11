@@ -22,7 +22,7 @@ class stack:
 		return self.data[-1]
 
 	def is_empty(self):
-		return len(self.data) == 0
+		return not self.data
 
 class queue:
 	def __init__(self, iterable=None):
@@ -43,7 +43,7 @@ class queue:
 		return self.data[0]
 
 	def is_empty(self):
-		return len(self.data) == 0
+		return not self.data
 
 # Let's test it!
 if __name__ == '__main__':
