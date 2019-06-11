@@ -1,8 +1,7 @@
 from collections import deque
 
-class EmptyStackException(Exception):
-	def __init__(self, message):
-		self.message = message
+class EmptyStackError(Exception):
+	pass
 
 class stack:
 	def __init__(self, iterable=None):
@@ -16,7 +15,7 @@ class stack:
 
 	def pop(self):
 		if not self.data:
-			raise EmptyStackException('pop from an empty stack')
+			raise EmptyStackError('pop from an empty stack')
 		return self.data.pop()
 
 	def peek(self):
