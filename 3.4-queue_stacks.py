@@ -14,12 +14,20 @@ class MyQueue:
 
 	def dequeue(self):
 		if not self.dequeue_stack:
-			if not self.enqueue_stack:
-				raise EmptyQueueError('dequeue from an empty queue')
-			else:
-				for i in range(len(self.enqueue_stack)):
-					self.dequeue_stack.append(self.enqueue_stack.pop())
+			self.move()
 		return self.dequeue_stack.pop()
+
+	def peek(self):
+		if not self.dequeue_stack:
+			self.move()
+		return self.dequeue_stack[-1]
+
+	def move(self):
+		if not self.enqueue_stack:
+			raise EmptyQueueError('dequeue from an empty queue')
+		else:
+			for i in range(len(self.enqueue_stack)):
+				self.dequeue_stack.append(self.enqueue_stack.pop())
 
 # Let's test it!
 q = MyQueue([1, 2, 3, 4])
@@ -28,6 +36,7 @@ print('enqueue: 5')
 q.enqueue(5)
 print('dequeue:', q.dequeue())
 print(q.enqueue_stack, q.dequeue_stack)
+print('peek:', q.peek())
 print('dequeue:', q.dequeue())
 print('dequeue:', q.dequeue())
 print('enqueue: 6, 7')
@@ -36,6 +45,9 @@ q.enqueue(7)
 print(q.enqueue_stack, q.dequeue_stack)
 print('dequeue:', q.dequeue())
 print('dequeue:', q.dequeue())
+print(q.enqueue_stack, q.dequeue_stack)
+print('peek:', q.peek())
+print(q.enqueue_stack, q.dequeue_stack)
 print('dequeue:', q.dequeue())
 print(q.enqueue_stack, q.dequeue_stack)
 print('dequeue:', q.dequeue())
