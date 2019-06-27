@@ -38,6 +38,19 @@ def inorder_walk(n, keys):
 		keys.append(n.key)
 		inorder_walk(n.right, keys)
 
+def validate_bst3(n):
+	return bst_helper(n, None, None)
+
+def bst_helper(n, low, high):
+	if n is None:
+		return True
+	print(n.key, low, high)
+	if low is not None and n.key <= low or high is not None and n.key > high:
+		return False
+	if not bst_helper(n.left, low, n.key) or not bst_helper(n.right, n.key, high):
+		return False
+	return True
+
 # Let's test it!
 r = Node(6)
 r.left, r.right = Node(5), Node(7)
@@ -49,5 +62,10 @@ r2.left, r2.right = Node(5), Node(7)
 r2.left.left, r2.left.right = Node(2), Node(7)
 r2.right.right = Node(8)
 
+print('CLRS: left subtree <= n.key <= right subtree')
 print(validate_bst2(r))
 print(validate_bst2(r2))
+print()
+print('CtCI: left subtree <= n.key < right subtree')
+print(validate_bst3(r))
+print(validate_bst3(r2))
