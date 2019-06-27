@@ -11,11 +11,9 @@ def successor(n):
 	if n.right is not None:
 		return minimum(n.right)
 	p = n.parent
-	while p is not None:
-		if n is p.left:
-			return p
+	while p is not None and n is p.right:
 		n, p = p, p.parent
-	return None
+	return p
 
 def minimum(n):
 	p = n
