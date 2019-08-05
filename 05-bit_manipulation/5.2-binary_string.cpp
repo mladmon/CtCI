@@ -1,9 +1,10 @@
 #include <iostream>
 #include <bitset>
+#include <string>
 
 using namespace std;
 
-void printBinary(double num) {
+string printBinary(double num) {
 	bitset<32> binNum;
 	int i = 31;
 	while (num != 0 && i >= 0) {
@@ -18,17 +19,16 @@ void printBinary(double num) {
 	}
 
 	if (num != 0) {
-		cout << "ERROR" << endl;
-	} else {
-		cout << "0." << binNum << endl;
+		return "ERROR";
 	}
+	return "0." + binNum.to_string();
 }
 
 int main () {
-	printBinary(0.72);
-	printBinary(0.59375);
-	printBinary(0.45);
-	printBinary(0.625);
+	cout << "0.72: " << printBinary(0.72) << endl;
+	cout << "0.59375: " << printBinary(0.59375) << endl;
+	cout << "0.45: " << printBinary(0.45) << endl;
+	cout << "0.625: " << printBinary(0.625) << endl;
 
 	return 0;
 }
