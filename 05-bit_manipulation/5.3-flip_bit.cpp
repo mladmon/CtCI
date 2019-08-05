@@ -2,13 +2,15 @@
 
 using namespace std;
 
+#define SIZE_INT sizeof(int)*8
+
 int flipBit(int num) {
 	if (num == -1)
-		return sizeof(int)*8;
+		return SIZE_INT;
 
 	int curSeq = 0, nextSeq = 0, longestSeq = 0;
 	int runningCount = 0;
-	for (int i=0; i < sizeof(int)*8; ++i) {
+	for (int i=0; i < SIZE_INT; ++i) {
 		if (num & 1) {
 			++runningCount;
 		} else {
