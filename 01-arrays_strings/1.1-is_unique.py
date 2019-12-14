@@ -1,7 +1,6 @@
-# no restrictions - O(n) runitme, O(n) space (all from creating the set!)
+# No restrictions: O(n) runitme, O(n) space (all from creating the set!)
 def is_unique(string):
-	#return len(set(string)) == len(string)
-	return len(set(string)) is len(string)
+	return len(set(string)) == len(string)
 
 # Let's test it!
 print("hello, world!", is_unique("hello, world!"))
@@ -13,11 +12,11 @@ print('h', is_unique('h'))
 print('', is_unique(''))
 print()
 
-# restricted no data structures allowed - O(n^2), O(1)
+# No data structures allowed: O(n^2), O(1)
 def is_unique2(string):
 	for i, char in enumerate(string):
-		for other in range(i+1, len(string)):
-			if char is string[other]:
+		for j in range(i+1, len(string)):
+			if char == string[j]:
 				return False
 	return True
 
@@ -31,11 +30,11 @@ print('h', is_unique2('h'))
 print('', is_unique2(''))
 print()
 
-# restricted, better runtime - O(n*log n), O(1)
+# No data structures allowed: O(n*log n), O(1)
 def is_unique3(string):
-	s = sorted(string)
-	for i in range(1, len(string)):
-		if s[i-1] is s[i]:
+	s = sorted(string) # s is a list!
+	for i in range(len(s)-1):
+		if s[i] == s[i+1]:
 			return False
 	return True
 
