@@ -1,18 +1,18 @@
 # using a hash table of char:freq pairs
 def is_permutation(str1, str2):
-	if len(str1) is not len(str2):
+	if len(str1) != len(str2):
 		return False
-	d1 = {}
-	for c in str1:
-		d1[c] = d1.get(c, 0) + 1
-	for c in str2:
-		if c not in d1:
+	freq = {}
+	for char in str1:
+		freq[char] = freq.get(char, 0) + 1
+	for char in str2:
+		if char not in freq:
 			return False
-		elif d1[c] is 1:
-			del d1[c]
+		elif freq[char] == 1:
+			del freq[char]
 		else:
-			d1[c] -= 1
-	return True # bec init. check if strings same length, d1 always empty here
+			freq[char] -= 1
+	return True
 
 # Let's test it!
 str1, str2 = "mario", "oiram"
