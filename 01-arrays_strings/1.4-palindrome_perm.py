@@ -14,7 +14,7 @@ def is_palindrome_perm(string):
 
 # O(n) runtime, O(1) space solution (could argue above is constant too)
 def is_palindrome_perm2(string):
-    char_freq = [0] * 256
+    char_freq = [0] * 128
     for char in string.lower().replace(' ', ''):
         char_freq[ord(char)] += 1
 
