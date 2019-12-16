@@ -1,43 +1,38 @@
-# python str methods make this problem very easy
+# Python str methods make this problem very easy
 def urlify(string):
 	return string.rstrip().replace(' ', '%20')
 
-# the way the problem intended us to do it...
-def urlify_not_the_python_way(string, n):
-	result = list(string)
+# The problem intends for us to implement str.replace() in-place
+def non_pythonic_urlify(string, true_length):
+	char_list = list(string)
 	num_spaces = 0
-	for i in range(n):
-		if result[i] is ' ':
+	for i in range(true_length):
+		if char_list[i] == ' ':
 			num_spaces += 1
-	last_space = n
-	for i in reversed(range(n)):
-		if num_spaces is 0:
-			break
-		if result[i] is ' ':
-			for j in reversed(range(i+1, last_space)):
-				result[j + num_spaces*2] = result[j]
-			result[i + num_spaces*2] = '0'
-			result[i + num_spaces*2 - 1] = '2'
-			result[i + num_spaces*2 - 2] = '%'
-			last_space = i
-			num_spaces -= 1
-	return ''.join(result)
+
+	copy_to_index = true_length + num_spaces*2 - 1
+	for i in reversed(range(true_length)):
+		if char_list[i] == ' ':
+			char_list[copy_to_index] = '0'
+			char_list[copy_to_index - 1] = '2'
+			char_list[copy_to_index - 2] = '%'
+			copy_to_index -= 3
+		else:
+			char_list[copy_to_index] = char_list[i]
+			copy_to_index -= 1
+
+	return ''.join(char_list)
 
 # Let's test it!
-s1 = "mario admon"
-s2 = "mario admon   "
-s3 = "mario  admon  "
-s4 = "This sentence has several spaces   "
-print(repr(s1), urlify(s1))
-print(repr(s2), urlify(s2))
-print(repr(s3), urlify(s3))
-print(repr(s4), urlify(s4))
-
-s1 = "mario admon  "
-s2 = "mario admon      "
+s1 = "Mr John Smith    "
+s2 = "mario admon  "
 s3 = "mario  admon    "
 s4 = "This sentence has several spaces        "
-print(repr(s1), urlify_not_the_python_way(s1, 11))
-print(repr(s2), urlify_not_the_python_way(s2, 11))
-print(repr(s3), urlify_not_the_python_way(s3, 12))
-print(repr(s4), urlify_not_the_python_way(s4, 32))
+print(repr(s1), repr(urlify(s1)))
+print(repr(s2), repr(urlify(s2)))
+print(repr(s3), repr(urlify(s3)))
+
+print(repr(s1), repr(non_pythonic_urlify(s1, 13)))
+print(repr(s2), repr(non_pythonic_urlify(s2, 11)))
+print(repr(s3), repr(non_pythonic_urlify(s3, 12)))
+print(repr(s4), repr(non_pythonic_urlify(s4, 32)))
