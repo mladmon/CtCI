@@ -5,21 +5,29 @@ def rotate_matrix(matrix):
 
 
 # O(n^2) runtime, O(1) space - rotate an NxN matrix in place
-def rotate_matrix2(matrix):
-    n = len(matrix)
-    for i in range(n // 2): 
-        m = n - i * 2 
-        for j in range(m - 1): 
-            rotate(i, j, m, matrix)
+def rotate_matrix_in_place(matrix):
+   n = len(matrix)
+   if n < 2:
+      return;
 
+   num_layers = n // 2
+   for i in range(num_layers):
+      layer_size = n - 2 * i 
+      for j in range(layer_size - 1): 
+         # store top
+         top = matrix[i][i+j]
 
-def rotate(origin, col_offset, size, matrix):
-    row, col = origin, origin + col_offset
-    val = matrix[row][col]
-    for i in range(4):
-        new_row, new_col = col, origin + size-(row-origin)-1
-        val, matrix[new_row][new_col] = matrix[new_row][new_col], val 
-        row, col = new_row, new_col
+         # left --> top
+         matrix[i][i+j] = matrix[n-1-i-j][i]
+
+         # bottom --> left
+         matrix[n-1-i-j][i] = matrix[n-1-i][n-1-i-j]
+
+         # right --> bottom
+         matrix[n-1-i][n-1-i-j] = matrix[i+j][n-1-i]
+
+         # top --> right
+         matrix[i+j][n-1-i] = top
 
 
 # Let's test it! 
@@ -36,19 +44,19 @@ m2 = [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 'a', 'b'], ['c', 'd', 'e', 'f']]
 m3 = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 'a'], ['b', 'c', 'd', 'e', 'f'],
       ['g', 'h', 'i', 'j', 'k'], ['l', 'm', 'n', 'o', 'p']]
 
-# rotate_matrix() returns a new matrix
+# rotate_matrix() returns a new rotated matrix
 print_matrix(m1)
 print_matrix(rotate_matrix(m1))
  
-# rotate_matrix2() modifies the original matrix
+# rotate_matrix_in_place() rotates the original matrix
 print_matrix(m1)
-rotate_matrix3(m1)
+rotate_matrix_in_place(m1)
 print_matrix(m1)
 
 print_matrix(m2)
-rotate_matrix3(m2)
+rotate_matrix_in_place(m2)
 print_matrix(m2)
 
 print_matrix(m3)
-rotate_matrix3(m3)
+rotate_matrix_in_place(m3)
 print_matrix(m3)
