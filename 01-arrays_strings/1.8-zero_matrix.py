@@ -1,36 +1,36 @@
-def zero_matrix(mat):
-	m, n = len(mat), len(mat[0])
-	rows, cols = [False] * m, [False] * n
-	for i, row in enumerate(mat):
-		for j, ele in enumerate(row):
-			if ele == 0:
-				rows[i] = True
-				cols[j] = True
-	for i in range(len(rows)):
-		if rows[i] is True:
-			mat[i] = [0] * n
-	for j in range(len(cols)):
-		if cols[j] is True:
-			zero_col(j, mat)
+# O(m*n) runtime, O(m+n) space 
+def zero_matrix(matrix):
+	zero_rows = [False] * len(matrix)    # m
+	zero_cols = [False] * len(matrix[0]) # n
+	for i in range(len(matrix)):
+		for j in range(len(matrix[0])):
+			if matrix[i][j] == 0:
+				zero_rows[i] = True
+				zero_cols[j] = True
 
-def zero_col(col, mat):
-	for row in mat:
-		row[col] = 0
+	for i in range(len(zero_rows)):
+		if zero_rows[i]:
+			matrix[i] = [0] * len(matrix[0])
+	for j in range(len(zero_cols)):
+		if zero_cols[j]:
+			for row in matrix:
+				row[j] = 0
 
 
 # Let's test it!
-def print_m(m):
-    for row in m:
-        for e in row:
-            print(e, end=' ')
+def print_matrix(matrix):
+    for row in matrix:
+        for elem in row:
+            print(elem, end=' ')
         print()
     print()
 
-m1 = [[1, 7, 8, 0, 3, 2, 7, 5],
+foo = [[1, 7, 8, 0, 3, 2, 7, 5],
       [2, 0, 0, 1, 7, 8, 9, 3],
       [2, 1, 3, 2, 9, 1, 4, 4],
       [2, 0, 6, 1, 7, 8, 9, 3],
       [3, 2, 5, 2, 8, 9, 6, 0]]
-print_m(m1)
-zero_matrix(m1)
-print_m(m1)
+
+print_matrix(foo)
+zero_matrix(foo)
+print_matrix(foo)
