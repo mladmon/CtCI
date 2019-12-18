@@ -1,59 +1,79 @@
 from linked_list import *
 
+# Definition: k = 0, 1 --> 'last', k = 2 --> '2nd to last', etc.
+# O(n) runtime, O(1) space - makes 2 passes: calc. size, advance
 def kth_to_last(head, k):
+	if k == 0:
+		k = 1
+
 	size = 0
 	n = head
 	while n is not None:
 		size += 1
 		n = n.next
-	if size <= k:
+
+	if size < k:
 		return None
 	else:
 		n = head
-		for i in range(size-k-1):
+		for i in range(size - k):
 			n = n.next
 		return n
 
+
+# O(n) runtime, O(1) space - better solution: single pass
 def kth_to_last2(head, k):
-	num_moves = 0
-	kth, runner = head, head
-	while runner is not None:
-		if num_moves > k:
-			kth = kth.next
-		runner = runner.next
-		num_moves += 1
-	if k >= num_moves:
-		return None
+	if head is None:
+		return head
+
+	# advance second k - 1 nodes
+	first, second = head, head
+	for i in range(k - 1):
+		if second is None or second.next is None:
+			return None
+		second = second.next
+
+	# advance both nodes until second is at the end
+	while second.next is not None:
+		first = first.next
+		second = second.next
+
+	return first
+
+
+def print_node(node):
+	if node is not None:
+		print(node.data)
 	else:
-		return kth
+		print(None)
+
 
 # Let's test it!
-l1 = Node(2)
-l1.append(7)
-l1.append(9)
-l1.append(3)
-l1.append(5)
-l1.append(2)
+foo = Node(2)
+foo.append(7)
+foo.append(9)
+foo.append(3)
+foo.append(5)
+foo.append(13)
+print_l(foo)
 
-def print_kth(kth):
-	if kth:
-		print(kth.data)
-	else:
-		print(repr(None))
-
-print_l(l1)
 print('0th to last:', end=' ')
-#print_kth(kth_to_last(l1, 0))
-print_kth(kth_to_last2(l1, 0))
+print_node(kth_to_last2(foo, 0))
+
 print('1st to last:', end=' ')
-#print_kth(kth_to_last(l1, 1))
-print_kth(kth_to_last2(l1, 1))
+print_node(kth_to_last2(foo, 1))
+
 print('4th to last:', end=' ')
-#print_kth(kth_to_last(l1, 4))
-print_kth(kth_to_last2(l1, 4))
+print_node(kth_to_last2(foo, 4))
+
 print('5th to last:', end=' ')
-#print_kth(kth_to_last(l1, 5))
-print_kth(kth_to_last2(l1, 5))
+print_node(kth_to_last2(foo, 5))
+
 print('6th to last:', end=' ')
-#print_kth(kth_to_last(l1, 6))
-print_kth(kth_to_last2(l1, 6))
+print_node(kth_to_last2(foo, 6))
+
+print('7th to last:', end=' ')
+print_node(kth_to_last2(foo, 7))
+
+print('9th to last:', end=' ')
+print_node(kth_to_last2(foo, 9))
