@@ -9,15 +9,15 @@ class Node:
 			n = n.next
 		n.next = Node(d)
 
-	def search(self, k):
+	def search(self, d):
 		n = self
 		while n is not None:
-			if n.data == k:
+			if n.data == d:
 				return n
 			n = n.next
 		return None
 
-def print_l(head):
+def print_list(head):
 	n = head
 	while n is not None:
 		print(n.data, end=' ')
@@ -27,20 +27,20 @@ def print_l(head):
 
 # Let's test it!
 if __name__ == '__main__':
-	head = Node(2)
-	head.append(3)
-	head.append(7)
-	head.append(2)
-	head.append(3)
-	head.append(5)
-	head.append(1)
-	head.append(2)
+	foo = Node(2)
+	foo.append(3)
+	foo.append(7)
+	foo.append(2)
+	foo.append(3)
+	foo.append(5)
+	foo.append(1)
+	foo.append(2)
 
-	n1 = head.search(7)
+	n1 = foo.search(7)
 	n2 = n1.search(5)
-	n3 = head.search(99)
+	n3 = foo.search(99)
 
-	print_l(head)
-	print_l(n1)
-	print_l(n2)
-	print(repr(n3))
+	print_list(foo)
+	print_list(n1)
+	print_list(n2)
+	print(n3)
