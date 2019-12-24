@@ -32,23 +32,24 @@ def partition(head, x):
 	else:
 		return head
 
+
 # Let's test it!
-l1 = Node(3)
-l1.append(5)
-l1.append(8)
-l1.append(5)
-l1.append(10)
-l1.append(2)
-l1.append(1)
+foo = Node(3)
+foo.append(5)
+foo.append(8)
+foo.append(5)
+foo.append(10)
+foo.append(2)
+foo.append(1)
 
-l2 = Node(3)
-l2.append(1)
+bar = Node(3)
+bar.append(1)
 
-print_l(l1)
-head = partition(l1, 5)
-print_l(head)
+print_list(foo)
+head = partition(foo, 5)
+print_list(head)
 
-print_l(l2)
-head = partition(l2, 5)
-print_l(head)
-print_l(partition(head, 2))
+print_list(bar)
+head = partition(bar, 5)
+print_list(head)
+print_list(partition(head, 2))

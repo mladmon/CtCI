@@ -6,29 +6,29 @@ def delete_middle(node):
 		node.next = node.next.next
 
 # Let's test it!
-head = Node(5)
-head.append(7)
-head.append(9)
-head.append(13)
+foo = Node(5)
+foo.append(7)
+foo.append(9)
+foo.append(13)
 
-print_l(head)
+print_list(foo)
 print('Try deleting 13:', end=' ')
-delete_middle(head.search(13))
-print_l(head)
+delete_middle(foo.search(13))
+print_list(foo)
 
 print('Try deleting 9:', end=' ')
-delete_middle(head.search(9))
-print_l(head)
+delete_middle(foo.search(9))
+print_list(foo)
 
-new_head = head.search(7)
+new_head = foo.search(7)
 print('Try deleting 5:', end=' ')
-delete_middle(head.search(5))
-print_l(new_head)
+delete_middle(foo.search(5))
+print_list(new_head)
 
 print('Try deleting 7:', end=' ')
 delete_middle(new_head.search(7))
-print_l(new_head)
+print_list(new_head)
 
 print('Try deleting 13:', end=' ')
 delete_middle(new_head.search(13))
-print_l(new_head)
+print_list(new_head)

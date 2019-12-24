@@ -55,7 +55,7 @@ foo.append(9)
 foo.append(3)
 foo.append(5)
 foo.append(13)
-print_l(foo)
+print_list(foo)
 
 print('0th to last:', end=' ')
 print_node(kth_to_last2(foo, 0))

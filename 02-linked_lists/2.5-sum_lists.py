@@ -14,6 +14,7 @@ def sum_lists(l1, l2):
 		result.append(1)
 	return result
 
+
 def sum_lists_rec(l1, l2):
 	result = sum_lists_helper(l1, l2)
 	if result[0]:
@@ -22,6 +23,7 @@ def sum_lists_rec(l1, l2):
 		return head
 	else:
 		return result[1]
+
 
 def sum_lists_helper(l1, l2):
 	if l1 is None:
@@ -35,6 +37,7 @@ def sum_lists_helper(l1, l2):
 		digit.next = result[1]
 		result = (carry, digit)
 	return result
+
 
 # Let's test it!
 l1 = Node(7)
@@ -53,10 +56,10 @@ l4 = Node(2)
 l4.append(9)
 l4.append(5) 
 
-print_l(l1)
-print_l(l2)
-print_l(sum_lists(l1, l2))
+print_list(l1)
+print_list(l2)
+print_list(sum_lists(l1, l2))
 
-print_l(l3)
-print_l(l4)
-print_l(sum_lists_rec(l3, l4))
+print_list(l3)
+print_list(l4)
+print_list(sum_lists_rec(l3, l4))

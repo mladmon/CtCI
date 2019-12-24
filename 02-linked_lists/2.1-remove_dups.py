@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	foo.append(1)
 	foo.append(2)
 
-	print_l(foo)
+	print_list(foo)
 	remove_dups(foo)
 	#remove_dups2(foo)
-	print_l(foo)
+	print_list(foo)
