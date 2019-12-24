@@ -17,6 +17,7 @@ class Node:
 			n = n.next
 		return None
 
+
 def print_list(head):
 	n = head
 	while n is not None:
