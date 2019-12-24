@@ -3,6 +3,7 @@ def urlify(string):
 	return string.rstrip().replace(' ', '%20')
 
 # The problem intends for us to implement str.replace() in-place
+# O(n) runtime, O(1) space
 def non_pythonic_urlify(string, true_length):
 	char_list = list(string)
 	num_spaces = 0
