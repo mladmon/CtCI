@@ -59,21 +59,15 @@ print_list(foo)
 
 print('0th to last:', end=' ')
 print_node(kth_to_last2(foo, 0))
-
 print('1st to last:', end=' ')
 print_node(kth_to_last2(foo, 1))
-
 print('4th to last:', end=' ')
 print_node(kth_to_last2(foo, 4))
-
 print('5th to last:', end=' ')
 print_node(kth_to_last2(foo, 5))
-
 print('6th to last:', end=' ')
 print_node(kth_to_last2(foo, 6))
-
 print('7th to last:', end=' ')
 print_node(kth_to_last2(foo, 7))
-
 print('9th to last:', end=' ')
 print_node(kth_to_last2(foo, 9))
