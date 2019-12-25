@@ -31,19 +31,18 @@ def remove_dups2(head):
 
 
 # Let's test it!
-if __name__ == '__main__':
-	foo = Node(2)
-	foo.append(2)
-	foo.append(2)
-	foo.append(3)
-	foo.append(7)
-	foo.append(2)
-	foo.append(3)
-	foo.append(5)
-	foo.append(1)
-	foo.append(2)
+foo = Node(2)
+foo.append(2)
+foo.append(2)
+foo.append(3)
+foo.append(7)
+foo.append(2)
+foo.append(3)
+foo.append(5)
+foo.append(1)
+foo.append(2)
 
-	print_list(foo)
-	remove_dups(foo)
-	#remove_dups2(foo)
-	print_list(foo)
+print_list(foo)
+remove_dups(foo)
+#remove_dups2(foo)
+print_list(foo)
