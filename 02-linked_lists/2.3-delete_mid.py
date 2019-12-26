@@ -1,7 +1,7 @@
 from linked_list import *
 
 def delete_middle(node):
-	if node.next is not None:
+	if node is not None and node.next is not None:
 		node.data = node.next.data
 		node.next = node.next.next
 
@@ -10,25 +10,24 @@ foo = Node(5)
 foo.append(7)
 foo.append(9)
 foo.append(13)
-
 print_list(foo)
-print('Try deleting 13:', end=' ')
+
+print('Attempting to delete 13:', end=' ')
 delete_middle(foo.search(13))
 print_list(foo)
 
-print('Try deleting 9:', end=' ')
+print('Attempting to delete 9: ', end=' ')
 delete_middle(foo.search(9))
 print_list(foo)
 
-new_head = foo.search(7)
-print('Try deleting 5:', end=' ')
-delete_middle(foo.search(5))
-print_list(new_head)
+print('Attempting to delete 5: ', end=' ')
+delete_middle(foo) # foo is now 7
+print_list(foo)
 
-print('Try deleting 7:', end=' ')
-delete_middle(new_head.search(7))
-print_list(new_head)
+print('Attempting to delete 7: ', end=' ')
+delete_middle(foo) # foo is now 13
+print_list(foo)
 
-print('Try deleting 13:', end=' ')
-delete_middle(new_head.search(13))
-print_list(new_head)
+print('Attempting to delete 13:', end=' ')
+delete_middle(foo)
+print_list(foo)
