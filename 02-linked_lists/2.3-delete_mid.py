@@ -1,5 +1,6 @@
 from linked_list import *
 
+# O(1) runtime, O(1) space - trick is it doesn't work at the end
 def delete_middle(node):
 	if node is not None and node.next is not None:
 		node.data = node.next.data
