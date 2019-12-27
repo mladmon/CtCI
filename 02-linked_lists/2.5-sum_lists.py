@@ -41,8 +41,14 @@ def sum_lists(l1, l2):
 
 
 # O(n) runtime, O(n) space - recursive solution to the FOLLOW UP question
-# Note, this solution only works for operands of the same length
 def sum_lists_rec(l1, l2):
+	l1_length = list_length(l1)
+	l2_length = list_length(l2)
+	if l1_length < l2_length:
+		l1 = pad_with_zeros(l1, l2_length - l1_length)
+	elif l2_length < l1_length:
+		l2 = pad_with_zeros(l2, l1_length - l2_length)
+
 	partial_sum = sum_lists_helper(l1, l2)
 	if partial_sum.carry == 1:
 		final_sum = Node(1)
@@ -50,6 +56,31 @@ def sum_lists_rec(l1, l2):
 		return final_sum
 	else:
 		return partial_sum.sum
+
+
+def list_length(l):
+	length = 0
+	while l is not None:
+		length += 1
+		l = l.next
+
+	return length
+
+
+def pad_with_zeros(l, num_zeros):
+	if num_zeros == 0:
+		return l
+
+	head = Node(0)
+	num_zeros -= 1
+	n = head
+	while num_zeros > 0:
+		n.next = Node(0)
+		n = n.next
+		num_zeros -= 1
+
+	n.next = l
+	return head
 
 
 def sum_lists_helper(l1, l2):
@@ -103,6 +134,12 @@ print_list(sum_lists(biz, baz))
 print()
 
 # tests for FOLLOW UP question
+print('FOLLOW UP question:')
 print_list(foo)
 print_list(bar)
 print_list(sum_lists_rec(foo, bar))
+print()
+
+print_list(baz)
+print_list(biz)
+print_list(sum_lists_rec(baz, biz))
