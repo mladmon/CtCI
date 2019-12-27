@@ -1,5 +1,7 @@
 from linked_list import *
 
+# O(n^2) runtime, O(n) space - each result.append() operation is O(n)!
+# This solution doesn't work for numbers of varying size! :(
 def sum_lists(l1, l2):
 	carry, n1, n2 = 0, l1, l2
 	result = None
@@ -46,7 +48,7 @@ l1.append(6)
 
 l2 = Node(5)
 l2.append(9)
-l2.append(2) 
+#l2.append(2) --> this breaks sum_lists()
 
 l3 = Node(6)
 l3.append(1)
