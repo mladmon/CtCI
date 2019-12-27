@@ -1,36 +1,23 @@
 from linked_list import *
 
-def partition(head, x):
-	last_lt, last_gt_eq, n, new_head = None, None, head, head
-	while n:
-		if n.data < x:
-			# move node n
-			if last_lt:
-				temp = Node(n.data)
-				temp.next = last_lt.next
-				last_lt.next = temp
-				last_lt = temp
-			else:
-				last_lt = Node(n.data)
-				last_lt.next = head
-				new_head = last_lt
-			# remove old node n
-			if n.next:
-				n.data = n.next.data
-				n.next = n.next.next
-			else:
-				if last_gt_eq:
-					last_gt_eq.next = None
-				else:
-					last_lt.next = None
-				break
+# O(n) runtime, O(1) space - grows new list middle-out
+def partition(node, partition):
+	head, tail = node, node
+	while node is not None:
+		next_node = node.next
+		if node.data < partition:
+			node.next = head
+			head = node
 		else:
-			last_gt_eq = n
-			n = n.next
-	if new_head:
-		return new_head
-	else:
-		return head
+			tail.next = node
+			tail = node
+
+		node = next_node
+
+	if tail is not None:
+		tail.next = None
+
+	return head
 
 
 # Let's test it!
@@ -42,14 +29,26 @@ foo.append(10)
 foo.append(2)
 foo.append(1)
 
-bar = Node(3)
-bar.append(1)
-
 print_list(foo)
-head = partition(foo, 5)
-print_list(head)
+print('partition: 5')
+foo = partition(foo, 5)
+print_list(foo)
+print()
+
+bar = Node(7)
+bar.append(4)
 
 print_list(bar)
-head = partition(bar, 5)
-print_list(head)
-print_list(partition(head, 2))
+print('partition: 10')
+bar = partition(bar, 10)
+print_list(bar)
+print('partition: 5')
+bar = partition(bar, 5)
+print_list(bar)
+print('partition: 3')
+bar = partition(bar, 3)
+print_list(bar)
+
+baz = None
+baz = partition(baz, 5)
+print_list(baz)
