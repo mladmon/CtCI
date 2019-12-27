@@ -1,19 +1,37 @@
 from linked_list import *
 
-# O(n^2) runtime, O(n) space - each result.append() operation is O(n)!
-# This solution doesn't work for numbers of varying size! :(
+# O(n) runtime, O(n) space (where n is the larger of the two lists)
 def sum_lists(l1, l2):
-	carry, n1, n2 = 0, l1, l2
-	result = None
-	while n1:
+	result, last_digit = None, None
+	carry = 0
+	while l1 is not None or l2 is not None:
+		digit = Node(0)
+
+		if l1 is not None:
+			digit.data = l1.data
+			l1 = l1.next
+
+		if l2 is not None:
+			digit.data += l2.data
+			l2 = l2.next
+
+		digit.data += carry
+
+		# calculate the next carry and digit
+		carry = digit.data // 10
+		digit.data = digit.data % 10
+
+		# append the next digit to the sum
 		if result is None:
-			result = Node((n1.data + n2.data + carry) % 10)
+			result = digit
+			last_digit = digit
 		else:
-			result.append((n1.data + n2.data + carry) % 10)
-		carry = (n1.data + n2.data) // 10
-		n1, n2 = n1.next, n2.next
-	if carry:
-		result.append(1)
+			last_digit.next = digit
+			last_digit = digit
+
+	if carry == 1:
+		last_digit.next = Node(carry)
+
 	return result
 
 
@@ -42,26 +60,35 @@ def sum_lists_helper(l1, l2):
 
 
 # Let's test it!
-l1 = Node(7)
-l1.append(1)
-l1.append(6)
+foo = Node(7)
+foo.append(1)
+foo.append(6)
 
-l2 = Node(5)
-l2.append(9)
-#l2.append(2) --> this breaks sum_lists()
+bar = Node(5)
+bar.append(9)
+bar.append(2)
 
-l3 = Node(6)
-l3.append(1)
-l3.append(7)
+baz = Node(5)
+baz.append(9)
+baz.append(9)
 
-l4 = Node(2)
-l4.append(9)
-l4.append(5) 
+biz = Node(6)
+biz.append(9)
 
-print_list(l1)
-print_list(l2)
-print_list(sum_lists(l1, l2))
+# example from book
+print_list(foo)
+print_list(bar)
+print_list(sum_lists(foo, bar))
+print()
 
-print_list(l3)
-print_list(l4)
-print_list(sum_lists_rec(l3, l4))
+# results in extra carry
+print_list(foo)
+print_list(baz)
+print_list(sum_lists(foo, baz))
+print()
+
+# operands have different #s of digits
+print_list(biz)
+print_list(baz)
+print_list(sum_lists(biz, baz))
+
