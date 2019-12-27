@@ -1,4 +1,9 @@
 from linked_list import *
+from collections import namedtuple
+
+# Used in the recursive solution to the FOLLOW UP question below
+PartialSum = namedtuple('PartialSum', 'carry sum');
+
 
 # O(n) runtime, O(n) space (where n is the larger of the two lists)
 def sum_lists(l1, l2):
@@ -35,28 +40,32 @@ def sum_lists(l1, l2):
 	return result
 
 
+# O(n) runtime, O(n) space - recursive solution to the FOLLOW UP question
+# Note, this solution only works for operands of the same length
 def sum_lists_rec(l1, l2):
-	result = sum_lists_helper(l1, l2)
-	if result[0]:
-		head = Node(1)
-		head.next = result[1]
-		return head
+	partial_sum = sum_lists_helper(l1, l2)
+	if partial_sum.carry == 1:
+		final_sum = Node(1)
+		final_sum.next = partial_sum.sum
+		return final_sum
 	else:
-		return result[1]
+		return partial_sum.sum
 
 
 def sum_lists_helper(l1, l2):
 	if l1 is None:
 		return None
-	result = sum_lists_helper(l1.next, l2.next)
-	if result is None:
-		result = ((l1.data + l2.data) // 10, Node((l1.data + l2.data) % 10))
+
+	partial_sum = sum_lists_helper(l1.next, l2.next)
+	if partial_sum is None:
+		return PartialSum((l1.data + l2.data) // 10, 
+		                   Node((l1.data + l2.data) % 10))
 	else:
-		carry, digit = ((l1.data + l2.data) // 10, 
-		                Node((l1.data + l2.data + result[0]) % 10))
-		digit.next = result[1]
-		result = (carry, digit)
-	return result
+		carry = (l1.data + l2.data + partial_sum.carry) // 10
+		digit = Node((l1.data + l2.data + partial_sum.carry) % 10)
+		digit.next = partial_sum.sum
+
+		return PartialSum(carry, digit)
 
 
 # Let's test it!
@@ -91,4 +100,9 @@ print()
 print_list(biz)
 print_list(baz)
 print_list(sum_lists(biz, baz))
+print()
 
+# tests for FOLLOW UP question
+print_list(foo)
+print_list(bar)
+print_list(sum_lists_rec(foo, bar))
