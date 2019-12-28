@@ -1,46 +1,41 @@
 from linked_list import *
 
-def palindrome(head):
-	chars = []
+# O(n) runtime, O(n) space - create a list of nodes, compare to reversed
+def is_palindrome(head):
+	nodes = []
 	n = head
 	while n is not None:
-		chars.append(str(n.data).lower())
+		nodes.append(n.data)
 		n = n.next
-	return ''.join(chars) == ''.join(reversed(chars))
+
+	return nodes == list(reversed(nodes))
+
 
 # Let's test it!
-l1 = Node('m')
-l1.append('a')
-l1.append('r')
-l1.append('a')
-l1.append('m')
+foo = Node(1)
+foo.append(2)
+foo.append(7)
+foo.append(2)
+foo.append(1)
 
-l2 = Node('M')
-l2.append('a')
-l2.append('R')
-l2.append('A')
-l2.append('m')
+bar = Node(1)
+bar.append(2)
+bar.append(2)
+bar.append(1)
 
-l3 = Node('d')
-l3.append('i')
-l3.append('7')
-l3.append('!')
-l3.append('!')
-l3.append('7')
-l3.append('I')
-l3.append('D')
+baz = Node(1)
+baz.append(2)
+baz.append(3)
+baz.append(1)
 
-l4 = Node('s')
-l4.append('o')
-l4.append('r')
-l4.append('r')
-l4.append('y')
+print('foo:', end=' ')
+print_list(foo)
+print('foo:', is_palindrome(foo))
 
-print(palindrome(l1), end=' ')
-print_list(l1)
-print(palindrome(l2), end=' ')
-print_list(l2)
-print(palindrome(l3), end=' ')
-print_list(l3)
-print(palindrome(l4), end=' ')
-print_list(l4)
+print('bar:', end=' ')
+print_list(bar)
+print('bar:', is_palindrome(bar))
+
+print('baz:', end=' ')
+print_list(baz)
+print('baz:', is_palindrome(baz))
