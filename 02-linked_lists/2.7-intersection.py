@@ -1,67 +1,79 @@
 from linked_list import *
 
+# Note, n is the larger of the two lists in both solutions
+# O(n) runtime, O(n) space - use a set to compare nodes
 def intersection(l1, l2):
-	nodes = set()
-	n1, n2 = l1, l2
-	while n1 is not None:
-		nodes.add(n1)
-		n1 = n1.next
-	while n2 is not None:
-		if n2 in nodes:
-			return n2
-		n2 = n2.next
+	l1_nodes = set()
+	n = l1
+	while n is not None:
+		l1_nodes.add(n)
+		n = n.next
+
+	n = l2
+	while n is not None:
+		if n in l1_nodes:
+			return n
+		n = n.next
+
 	return None
 
+# O(n) runtime, O(1) space - comp. tails, use lengths to find intersection
 def intersection2(l1, l2):
-	size1, size2, n1, n2 = 1, 1, l1, l2
-	if n1 is None or n2 is None:
+	if l1 is None or l2 is None:
 		return None
-	while n1.next:
-		size1 += 1
+
+	n1, len_l1 = l1, 1
+	while n1.next is not None:
+		len_l1 += 1
 		n1 = n1.next
-	while n2.next:
-		size2 += 1
+
+	n2, len_l2 = l2, 1
+	while n2.next is not None:
+		len_l2 += 1
 		n2 = n2.next
+
 	if n1 is not n2:
 		return None
-	else:
-		if size1 >= size2:
-			return find_intersect(l1, l2, size1-size2)
-		else:
-			return find_intersect(l2, l1, size2-size1)
 
-def find_intersect(l1, l2, k):
-	n1, n2 = l1, l2
-	for i in range(k):
-		n1 = n1.next
-	while n1 is not n2:
-		n1, n2 = n1.next, n2.next
-	return n1
+	if len_l1 > len_l2:
+		return find_intersection(l1, l2, len_l1-len_l2)
+	else:
+		return find_intersection(l2, l1, len_l2-len_l1)
+
+
+def find_intersection(larger, smaller, diff):
+	for i in range(diff):
+		larger = larger.next
+	while larger is not smaller:
+		larger, smaller = larger.next, smaller.next
+
+	return larger
+
 
 # Let's test it!
-l1 = Node(7)
-l1.append(3)
-l1.append(8)
-l1.append(9)
+foo = Node(7)
+foo.append(3)
+foo.append(8)
+foo.append(9)
 
-l2 = Node(5)
-l2.append(11)
-l2.append(3)
-l2.append(6)
+bar = Node(5)
+bar.append(11)
+bar.append(3)
+bar.append(6)
 
-l3 = Node(12)
-l3.append(16)
-l3.next.next = l1.next
+baz = Node(12)
+baz.append(16)
+baz.next.next = foo.next
 
-print('l1:', end=' ')
-print_list(l1)
-print('3:', l1.next)
-print('l2:', end=' ')
-print_list(l2)
-print('3:', l2.next.next)
-print('l3:', end=' ')
-print_list(l3)
-print('3:', l3.next.next)
-print('intersection(l1, l2):', intersection2(l1, l2))
-print('intersection(l1, l3):', intersection2(l1, l3))
-print('intersection(l2, l3):', intersection2(l2, l3))
+print('foo:', end=' ')
+print_list(foo)
+print('3:', foo.next)
+print('bar:', end=' ')
+print_list(bar)
+print('3:', bar.next.next)
+print('baz:', end=' ')
+print_list(baz)
+print('3:', baz.next.next)
+print('intersection(foo, bar):', intersection2(foo, bar))
+print('intersection(foo, baz):', intersection2(foo, baz))
+print('intersection(bar, baz):', intersection2(bar, baz))
