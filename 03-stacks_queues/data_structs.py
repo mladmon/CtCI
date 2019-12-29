@@ -4,6 +4,10 @@ class EmptyStackError(Exception):
 	pass
 
 
+class EmptyQueueError(Exception):
+	pass
+
+
 class stack:
 	def __init__(self, iterable=None):
 		if iterable is None:
@@ -16,10 +20,12 @@ class stack:
 
 	def pop(self):
 		if not self.data:
-			raise EmptyStackError('pop from an empty stack')
+			raise EmptyStackError('tried popping from an empty stack')
 		return self.data.pop()
 
 	def peek(self):
+		if not self.data:
+			raise EmptyStackError('tried peeking from an empty stack')
 		return self.data[-1]
 
 	def is_empty(self):
@@ -38,10 +44,12 @@ class queue:
 
 	def remove(self):
 		if not self.data:
-			raise IndexError('pop from an empty queue')
+			raise EmptyQueueError('tried removing from an empty queue')
 		return self.data.popleft()
 
 	def peek(self):
+		if not self.data:
+			raise EmptyQueueError('tried peeking from an empty queue')
 		return self.data[0]
 
 	def is_empty(self):
@@ -55,6 +63,7 @@ if __name__ == '__main__':
 
 	print('s:', s.data)
 	print('s.is_empty():', s.is_empty())
+	#print('s.peek():', s.peek()) # raises an EmptyStackError
 	print('pushing 5 and 13 onto the stack')
 	s.push(5)
 	s.push(13)
