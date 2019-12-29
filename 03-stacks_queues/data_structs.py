@@ -3,6 +3,7 @@ from collections import deque
 class EmptyStackError(Exception):
 	pass
 
+
 class stack:
 	def __init__(self, iterable=None):
 		if iterable is None:
@@ -23,6 +24,7 @@ class stack:
 
 	def is_empty(self):
 		return not self.data
+
 
 class queue:
 	def __init__(self, iterable=None):
@@ -45,26 +47,29 @@ class queue:
 	def is_empty(self):
 		return not self.data
 
+
 # Let's test it!
 if __name__ == '__main__':
 	s = stack()
 	q = queue([1, 2, 3])
 
-	print('s', s.data)
-	print('s.is_empty()', s.is_empty())
+	print('s:', s.data)
+	print('s.is_empty():', s.is_empty())
+	print('pushing 5 and 13 onto the stack')
 	s.push(5)
 	s.push(13)
-	print('s', s.data)
-	print('s.pop()', s.pop())
-	print('s.peek()', s.peek())
+	print('s:', s.data)
+	print('s.pop():', s.pop())
+	print('s.peek():', s.peek())
+	print()
 	
-	print('q', q.data)
-	print('q.is_empty()', q.is_empty())
-	print('q.peek()', q.peek())
-	print('q.remove()', q.remove())
-	q.add(30)
-	print('q', q.data)
-	for i in range(3):
-		q.remove()
-	print('q', q.data)
-	print('q.is_empty()', q.is_empty())
+	print('adding 1, 2, and 3 to the queue')
+	print('q:', q.data)
+	print('q.is_empty():', q.is_empty())
+	print('q.peek():', q.peek())
+	print('q.remove():', q.remove())
+	print('adding 5 to the queue')
+	q.add(5)
+	print('q:', q.data)
+	print('p.peek():', q.peek())
+
