@@ -1,49 +1,62 @@
 from collections import namedtuple
 
-Node = namedtuple('Node', 'val min')
+Pair = namedtuple('Pair', 'elem min')
 
-class Stack:
+
+# methods pop() and min() return None when called on an empty MinStack
+class MinStack:
 	def __init__(self):
 		self.data = []
 
-	def push(self, val):
-		if not self.data or self.data[-1].min > val:
-			self.data.append(Node(val, val))
+	def push(self, elem):
+		if not self.data or elem < self.data[-1].min:
+			self.data.append(Pair(elem, elem))
 		else:
-			self.data.append(Node(val, self.data[-1].min))
+			self.data.append(Pair(elem, self.data[-1].min))
 
 	def pop(self):
-		if self.data:
-			return self.data.pop().val
-		else:
-			return None
-	
-	def min(self):
-		if self.data:
-			return self.data[-1].min
-		else:
+		if not self.data:
 			return None
 
+		return self.data.pop().elem
+	
+	def min(self):
+		if not self.data:
+			return None
+
+		return self.data[-1].min
+
+
+def print_stack(stack):
+	print('[', end=' ')
+	for pair in stack.data:
+		print(pair, end=' ')
+	print(']')
+
+
 # Let's test it!
-s = Stack()
-s.push(3)
-s.push(7)
-print('[3, 7]')
-print('min:', s.min())
-s.push(11)
-s.push(2)
-print('[3, 7, 11, 2]')
-print('min:', s.min())
-print('s.pop():', s.pop())
-print('min:', s.min())
-s.push(6)
-s.push(-1)
-print('[3, 7, 11, 6, -1]')
-print('min:', s.min())
-for i in range(len(s.data)):
-	s.pop()
-print('[]')
-print('min:', repr(s.min()))
-s.push(2)
-print('[2]')
-print('min:', s.min())
+foo = MinStack()
+foo.push(5)
+foo.push(13)
+foo.push(3)
+
+print('foo:', end=' ')
+print_stack(foo)
+print('foo.min():', foo.min())
+print('foo.pop():', foo.pop())
+print('foo.min():', foo.min())
+print('foo.pop():', foo.pop())
+print('foo.min():', foo.min())
+print('foo.pop():', foo.pop())
+print('foo.min():', foo.min()) # None
+print()
+
+print('bar:', end=' ')
+bar = MinStack()
+bar.push('r')
+bar.push('l')
+bar.push('z')
+bar.push('x')
+bar.push('a')
+bar.push('r')
+print_stack(bar)
