@@ -1,54 +1,78 @@
-class SetOfStacks:
-	def __init__(self, threshold):
-		self.threshold = threshold
-		self.data = []
-
-	def push(self, val):
-		if not self.data or len(self.data[-1]) == self.threshold:
-			self.data.append([val])
-		else:
-			self.data[-1].append(val)
-
-	def pop(self, index=-1):
-		if self.data: # has at least 1 list w/ 1 element
-			val = self.data[index].pop()
-			if not self.data[index]:
-				del self.data[index]
-			return val
-		else:
-			raise EmptyStackError('pop from an empty stack')
-
-	def pop_at(self, index):
-		if index >= len(self.data) or index < 0:
-			raise IndexError('substack does not exist')
-		return self.pop(index)
-
 class EmptyStackError(Exception):
 	pass
 
+
+# creative way to implement pop_at() - add arg and default value of
+# -1 to pop(self, index=-1), and call self.pop(index) from pop_at()
+class SetOfStacks:
+	def __init__(self, threshold=4):
+		self.threshold = threshold
+		self.stacks = []
+
+	def push(self, elem):
+		if not self.stacks or len(self.stacks[-1]) == self.threshold:
+			self.stacks.append([elem])
+		else:
+			self.stacks[-1].append(elem)
+
+	def pop(self, index=-1):
+		if not self.stacks:
+			raise EmptyStackError('pop() from an empty stack')
+
+		elem = self.stacks[index].pop()
+		if not self.stacks[index]:
+			del self.stacks[index]
+
+		return elem
+
+	def pop_at(self, index):
+		if index < 0 or index >= len(self.stacks):
+			raise IndexError('index out of bounds')
+
+		return self.pop(index)
+
+
 # Let's test it!
-s = SetOfStacks(2)
-print(s.data)
+foo = SetOfStacks()
+for i in range(10):
+	foo.push(i)
+print('foo:', foo.stacks)
+print('foo.pop():', foo.pop())
+print('foo.pop():', foo.pop())
+print('foo.pop():', foo.pop())
+print('foo:', foo.stacks)
+print('foo.pop_at(0):', foo.pop_at(0))
+print('foo.pop():', foo.pop())
+print('foo:', foo.stacks)
+print()
+
+bar = SetOfStacks(2)
+print('bar:', bar.stacks)
 try:
-	s.pop()
+	print('bar.pop():', end=' ')
+	print(bar.pop())
 except EmptyStackError as err:
 	print(err)
-s.push(1)
-s.push(2)
-s.push(3)
-s.push(4)
-s.push(5)
-print(s.data)
-print('pop:', s.pop())
-print('pop:', s.pop())
-print('push: 6\npush: 7')
-s.push(6)
-s.push(7)
-print(s.data)
-print('pop_at(1):', s.pop_at(1))
-print('pop_at(0):', s.pop_at(0))
-print('pop:', s.pop())
-print(s.data)
-print('pop_at(1):', s.pop_at(1))
-print(s.data)
-print('pop_at(1):', s.pop_at(1)) # raises IndexError exception
+bar.push('a')
+bar.push('b')
+bar.push('c')
+bar.push('d')
+bar.push('e')
+print('bar:', bar.stacks)
+print('bar.pop:', bar.pop())
+print('bar.pop:', bar.pop())
+print('bar.push: 6\nbar.push: 7')
+bar.push(6)
+bar.push(7)
+print(bar.stacks)
+print('bar.pop_at(1):', bar.pop_at(1))
+print('bar.pop_at(0):', bar.pop_at(0))
+print('bar.pop:', bar.pop())
+print(bar.stacks)
+print('bar.pop_at(1):', bar.pop_at(1))
+print(bar.stacks)
+try:
+	print('bar.pop_at(1):', end=' ')
+	print(bar.pop_at(1)) # raises IndexError exception
+except IndexError as err:
+	print(err)
