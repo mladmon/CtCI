@@ -1,31 +1,36 @@
-def sort_stack(s1):
-	s2 = list()
-	while s1:
-		print('s1:', s1)
+# O(n^2) runtime, O(1) space - we inspect n, n-1, n-2, ..., 1 elements
+# and MOVE (not copy) elements between input and temporary stacks
+def sort_stack(stack):
+	temp = []
+	while stack:
+		#print('stack:', stack)
 		smallest = None
-		while s1:
-			if smallest is None or s1[-1] < smallest:
-				smallest = s1[-1]
-			s2.append(s1.pop())
-		stored = False
-		print('smallest:', smallest)
+		while stack:
+			if smallest is None or stack[-1] < smallest:
+				smallest = stack[-1]
+			temp.append(stack.pop())
+		#print('smallest:', smallest)
+
 		count = 0
-		while s2:
-			if s2[-1] < smallest:
+		while temp:
+			if temp[-1] < smallest:
 				break
-			val = s2.pop()
-			if val == smallest:
+			elem = temp.pop()
+			if elem == smallest:
 				count += 1
 				continue
-			s1.append(val)
+			stack.append(elem)
+
 		for i in range(count):
-			s2.append(smallest)
-		print('s2:', s2)
-	while s2:
-		s1.append(s2.pop())
+			temp.append(smallest)
+		#print('temp:', temp)
+
+	while temp:
+		stack.append(temp.pop())
+
 
 # Let's test it!
-s = [7, 2, 9, 3, 2, 1, 12, 0, 8, 2]
-print(s)
-sort_stack(s)
-print(s)
+foo = [7, 2, 9, 3, 2, 1, 12, 0, 8, 2]
+print(foo)
+sort_stack(foo)
+print(foo)
