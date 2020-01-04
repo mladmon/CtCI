@@ -1,34 +1,36 @@
 from enum import Enum
 from collections import namedtuple
 
-# add to Vertex instances as needed (thank you Python :)
+# algorithms may add to Vertex instances as needed
 class Color(Enum):
 	WHITE = 1
 	GRAY = 2
 	BLACK = 3
 	RED = 4	
 
-# add to Edge instances as needed
+
+# algorithms may add to Edge instances as needed
 class EdgeType(Enum):
 	TREE = 1
 	BACK = 2
 	FORWARD = 3
 	CROSS = 4
 
-# Edges stored in Vertex.adj attribute
+
+# Edges are stored in Vertex.adj attribute
 # v is the adjacent vertex, w is the weight of the edge (default=1)
 Edge = namedtuple('Edge', 'v w', defaults=[1])
 
-# algorithms can add attributes as needed (e.g., discovered, pred)
+
+# algorithms may add additional attributes as needed (e.g., color, discovered)
 class Vertex:
 	def __init__(self, key):
 		self.key = key
 		self.adj = []
 		#self.color = Color.WHITE
-		#self.disc = False
 
-# Graph is a dict of vertices (Edge set in vertices' adj. lists)
-# note: iterable must consist of iterable (key, Vertex) pairs
+
+# Graph is a dictionary of key: Vertex pairs
 class Graph:
 	def __init__(self, iterable=None):
 		if iterable is None:
@@ -36,7 +38,8 @@ class Graph:
 		else:
 			self.vertices = dict(iterable)
 
-# create the directed graph from CtCI pg. 106
+
+# directed graph from CtCI pg. 106
 graph = Graph([(i, Vertex(i)) for i in range(7)])
 graph.vertices[0].adj.append(Edge(graph.vertices[1]))
 graph.vertices[1].adj.append(Edge(graph.vertices[2]))
