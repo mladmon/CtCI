@@ -1,5 +1,6 @@
 from collections import deque
 
+# a tree node class - we add 'depth' and 'next' attributes on the fly below
 class Node:
 	def __init__(self, key):
 		self.key = key
@@ -7,42 +8,48 @@ class Node:
 		self.right = None
 
 
+# O(n) runtime, O(n) space - use BFS to traverse the tree level-by-level
 def list_of_depths(root):
 	levels = []
 	if root is None:
 		return levels
-	root.d = 0
+
+	root.depth = 0
 	queue = deque([root])
 	while queue:
 		n = queue.popleft()
-		add_to_levels(n, levels)
+		add_to_list(n, levels)
+
 		if n.left is not None:
-			n.left.d = n.d + 1
+			n.left.depth = n.depth + 1
 			queue.append(n.left)
 		if n.right is not None:
-			n.right.d = n.d + 1
+			n.right.depth = n.depth + 1
 			queue.append(n.right)
+
 	return levels
 
-def add_to_levels(n, levels):
-	if len(levels) == n.d:
+
+def add_to_list(n, levels):
+	if len(levels) == n.depth:
 		n.next = None
 		levels.append(n)
 	else:
-		n.next = levels[n.d]
-		levels[n.d] = n
+		n.next = levels[n.depth]
+		levels[n.depth] = n
+
 
 # Let's test it!
-r = Node(1)
-r.left, r.right = Node(2), Node(3)
-r.left.left, r.left.right = Node(4), Node(5)
-r.right.left, r.right.right = Node(6), Node(7)
-r.left.left.left = Node(8)
+foo = Node(1)
+foo.left, foo.right = Node(2), Node(3)
+foo.left.left, foo.left.right = Node(4), Node(5)
+foo.right.left, foo.right.right = Node(6), Node(7)
+foo.left.left.left = Node(8)
 
-depths = list_of_depths(r)
-for i, d in enumerate(depths):
-	print('depth {0}:'.format(i), end=' ')
-	while d:
-		print(d.key, end=' ')
-		d = d.next
+foo_depths = list_of_depths(foo)
+for depth, head in enumerate(foo_depths):
+	print(f'depth {depth}:', end=' ')
+	while head is not None:
+		print(head.key, end=' ')
+		head = head.next
 	print()
