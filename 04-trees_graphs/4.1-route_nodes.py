@@ -1,32 +1,34 @@
 from data_structs import *
 from collections import deque
 
-def route_bet_nodes(graph, n1, n2):
+# O(V+E) runtime, O(V) space - use BFS to see if dest is reachable
+def route_bet_nodes(graph, source, dest):
 	init(graph)
-	if not bfs(n1, n2):
-		init(graph)
-		return bfs(n2, n1)
-	return True
+	return bfs(source, dest)
 
-def bfs(n1, n2):
-	n1.disc = True
-	queue = deque([n1])
+
+def bfs(source, dest):
+	source.discovered = True
+	queue = deque([source])
 	while queue:
 		u = queue.popleft()
-		if u is n2:
+		if u is dest:
 			return True
+
 		for edge in u.adj:
-			if not edge.v.disc:
-				edge.v.disc = True
+			if not edge.v.discovered:
+				edge.v.discovered = True
 				queue.append(edge.v)
+
 	return False
+
 
 def init(graph):
 	for v in graph.vertices.values():
-		v.disc = False
+		v.discovered = False
 
-# Let's test it!
-print('see CtCI pg. 106 for graph used')
+
+# Let's test it
 print('(0, 1):', route_bet_nodes(graph, graph.vertices[0], graph.vertices[1]))
 print('(1, 0):', route_bet_nodes(graph, graph.vertices[1], graph.vertices[0]))
 print('(3, 1):', route_bet_nodes(graph, graph.vertices[3], graph.vertices[1]))
