@@ -4,29 +4,38 @@ class Node:
 		self.left = None
 		self.right = None
 
-def inorder_tree_walk(n):
-	if n is not None:
-		inorder_tree_walk(n.left)
-		print(n.key, end=' ')
-		inorder_tree_walk(n.right)
 
-def min_height_bst(keys):
-	return create_bst(keys, 0, len(keys)-1)
+def inorder_tree_walk(node):
+	if node is not None:
+		inorder_tree_walk(node.left)
+		print(node.key, end=' ')
+		inorder_tree_walk(node.right)
 
-def create_bst(arr, start, end):
-	if end < start:
+
+# O(n) runtime, O(log n) space - not including the BST we're creating,
+# depth of recursion is O(log n); use binary search to recursively
+# construct the BST
+def create_bst(arr):
+	return create_bst_helper(arr, 0, len(arr)-1)
+
+
+def create_bst_helper(arr, left, right):
+	if right < left:
 		return None
-	mid = (start + end) // 2
+
+	mid = (left + right) // 2
 	print('mid:', mid)
 	n = Node(arr[mid])
-	n.left = create_bst(arr, start, mid-1)
-	n.right = create_bst(arr, mid+1, end)
+	n.left = create_bst_helper(arr, left, mid-1)
+	n.right = create_bst_helper(arr, mid+1, right)
+
 	return n
 
+
 # Let's test it!
-keys = [0, 2, 5, 9, 11, 12, 17, 20, 23]
-print('keys:', keys)
-tree = min_height_bst(keys)
-print('bst:', end=' ')
-inorder_tree_walk(tree)
+foo = [0, 2, 5, 9, 11, 12, 17, 20, 23]
+print('foo:', foo)
+foo_tree = create_bst(foo)
+print('foo_tree:', end=' ')
+inorder_tree_walk(foo_tree)
 print()
