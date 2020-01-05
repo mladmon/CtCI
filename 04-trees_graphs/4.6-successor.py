@@ -5,21 +5,27 @@ class Node:
 		self.right = None
 		self.parent = None
 
+
+# O(n) runtime, O(1) space - linear runtime if tree not balanced
 def successor(n):
 	if n is None:
 		return None
+
 	if n.right is not None:
 		return minimum(n.right)
-	p = n.parent
-	while p is not None and n is p.right:
-		n, p = p, p.parent
-	return p
+
+	parent = n.parent
+	while parent is not None and n is parent.right:
+		n, parent = parent, parent.parent
+	return parent
+
 
 def minimum(n):
-	p = n
-	while n is not None:
-		p, n = n, n.left
-	return p
+	while n.left is not None:
+		n = n.left
+
+	return n
+
 
 # Let's test it!
 # BST from CLRS pg. 290
