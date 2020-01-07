@@ -1,10 +1,15 @@
 from enum import Enum
 from collections import deque
 
+class CycleDetectedError(Exception):
+	pass
+
+
 class Color(Enum):
 	WHITE = 1
 	GRAY = 2
 	BLACK = 3
+
 
 class Node:
 	def __init__(self, key):
@@ -12,44 +17,53 @@ class Node:
 		self.color = Color.WHITE
 		self.adj = []
 
-class CycleDetectedError(Exception):
-	pass
 
-def build_order(projects, dependencies):
-	init(projects, dependencies)
-	return topological_sort(projects)
+def create_graph(vertices, edges):
+	for vertex in vertices.values():
+		vertex.color = Color.WHITE
 
-def init(vertices, edges):
-	for v in vertices.values():
-		v.color = Color.WHITE
-	for e in edges:
-		vertices[e[1]].adj.append(vertices[e[0]])
+	for edge in edges:
+		vertices[edge[0]].adj.append(vertices[edge[1]])
+
+
+def dfs(u, build_order):
+	#print(u.key, u.color)
+	u.color = Color.GRAY
+	for v in u.adj:
+		#print('  ', v.key, v.color)
+		if v.color == Color.GRAY:
+			raise CycleDetectedError('not a dag')
+		elif v.color == Color.WHITE:
+			dfs(v, build_order)
+
+	u.color = Color.BLACK
+	build_order.appendleft(u.key)
+
 
 def topological_sort(vertices):
-	order = deque()
-	for v in vertices.values():
-		print(v.key, v.color)
-		if v.color == Color.WHITE:
-			v.color = Color.GRAY
-			dfs_visit(v, order)
-	return order
+	build_order = deque()
+	for vertex in vertices.values():
+		#print(vertex.key, vertex.color)
+		if vertex.color == Color.WHITE:
+			dfs(vertex, build_order)
 
-def dfs_visit(v, order):
-	print(v.key, v.color)
-	for other in v.adj:
-		print('  ', other.key, other.color)
-		if other.color == Color.GRAY:
-			raise CycleDetectedError('not a dag')
-		if other.color == Color.WHITE:
-			other.color = Color.GRAY
-			dfs_visit(other, order)
-	v.color = Color.BLACK
-	order.append(v.key) # topo sort: appendleft(); prob. wants opp. order
+	return build_order
+
+
+# O(V + E) runtime, O(V) space - recursion depth of DFS is O(V)
+def find_build_order(projects, dependencies):
+	create_graph(projects, dependencies)
+	return topological_sort(projects)
+
 
 # Let's test it!
 projects = {chr(i) : Node(chr(i)) for i in range(ord('a'), ord('f') + 1)}
 dependencies = [('a', 'd'), ('f', 'b'), ('b', 'd'), ('f', 'a'), ('d', 'c')]
-order = build_order(projects, dependencies)
-for project in order:
+build_order = find_build_order(projects, dependencies)
+
+print('projects: a b c d e f')
+print('build order:', end=' ')
+for project in build_order:
 	print(project, end=' ')
-print() 
+print()
+
